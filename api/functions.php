@@ -4,16 +4,14 @@
 	by adding http://
 */
 function convertURL($string){
-	if($string){
+	if ($string != null){
 		$parsedURL = parse_url($string);
-		if($parsedURL['scheme']!='http'){
-			$string = 'http://'.$string;
+		if (!in_array($parsedURL['scheme'], array("http", "https"))) {
+			$string = "http://" . $string;
 		}
 		return $string;
 	}
-	else {
-		return null; // No URL found
-	}
+	return null; // No URL found
 }
 
 /*
