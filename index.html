@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My App</title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<style>
+			body{
+				background: #f0f0f0;
+			}
+			.frame{
+				background: #fff;
+				max-width: 500px;
+				text-align: center;
+				margin: 50px auto;
+				padding: 15px 0;
+				position: relative;
+			}
+			p{
+				padding: 20px;
+				font-family: sans-serif;
+				font-size: 13px;
+				line-height: 1.5;
+			}
+			input[type="text"], button{
+				padding: 5px 10px;
+				width: 80%;
+			}
+			#putImageHere{
+				display: block;
+				margin: 20px auto;
+				max-width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="frame">
+			<p><b>Paste a URL here from an online retailer and we will attempt to find the product's photo.</b> Please allow up to 30 seconds to find the image.</p>
+			<input type="text" id="url" placeholder="http://myshop.com/product/leatherjacket.html">
+			<button id="searchButton" onclick="getImagesFromURL()">Search</button>
+			<img id="putImageHere" />
+		</div>
+
+		<script type="text/javascript">
+			function getImagesFromURL(){
+				var sourceURL = $('#url').val();
+				$.ajax({
+					url: '/api/?url='+sourceURL,
+					dataType: 'json',
+					beforeSend: function(){
+						console.log('Loading...');
+						$('#putImageHere').attr('src', 'img/ajax-loader.gif');
+					},
+					success: function(data){
+				    	console.log(data);
+				    	$('#putImageHere').attr('src', data['smartSelect'].url)
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
